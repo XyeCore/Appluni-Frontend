@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import Modal from '../Modal';
+import { Copy } from 'react-feather';
 
 export const Page = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const openModal = (content) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalContent(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -52,7 +66,13 @@ export const Page = () => {
                   <span className="px-3 py-1 text-sm font-medium text-green-800 bg-green-100 rounded-full">
                     In Progress
                   </span>
-                  <button className="text-indigo-600 hover:text-indigo-800 transition">
+                  <button className="text-indigo-600 hover:text-indigo-800 transition" onClick={() => openModal({
+                    id: "12345",
+                    university: 'University of Technology',
+                    program: 'Computer Science - Master\'s Program',
+                    deadline: 'March 15, 2024',
+                    status: 'Documents Under Review'
+                  })}>
                     View Details
                   </button>
                 </div>
@@ -77,7 +97,13 @@ export const Page = () => {
                   <span className="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">
                     Accepted
                   </span>
-                  <button className="text-indigo-600 hover:text-indigo-800 transition">
+                  <button className="text-indigo-600 hover:text-indigo-800 transition" onClick={() => openModal({
+                    id: "12345",
+                    university: 'State University',
+                    program: 'Business Administration - Bachelor\'s Program',
+                    deadline: 'February 28, 2024',
+                    status: 'Offer Received'
+                  })}>
                     View Details
                   </button>
                 </div>
@@ -130,6 +156,30 @@ export const Page = () => {
             </div>
           </div>
         </div>
+{/* Modal Window */}
+        <Modal  open={isModalOpen} onClose={closeModal}>
+          <div className="text-gray-900">
+          <h2 className="text-lg font-medium text-gray-900 mb-4">
+            Application Details
+          <div className="flex justify-between items-center mb-4">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(modalContent?.id);
+                alert("ID copied to clipboard");
+              }}
+              className="flex p-1 rounded-md text-gray-400 bg-white hover:bg-gray-50 hover:text-gray-600"
+            >
+              ID:  {modalContent?.id+"  "} <Copy />
+            </button>
+          </div>
+
+          </h2>
+          <p><strong>University:</strong> {modalContent?.university}</p>
+          <p><strong>Program:</strong> {modalContent?.program}</p>
+          <p><strong>Deadline:</strong> {modalContent?.deadline}</p>
+          <p><strong>Status:</strong> {modalContent?.status}</p>
+          </div>
+        </Modal>
       </main>
     </div>
   );

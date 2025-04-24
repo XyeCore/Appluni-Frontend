@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { RevealOnScroll } from '../RevealOnScroll';
 import { Carousel } from '../Carousel';
+import { isLoggedIn } from '../../App';
 
 const carouselItems = [
   { 
@@ -117,10 +118,10 @@ export const Home = () => {
                 Join thousands of successful applicants who have used our platform to secure their place in top European universities.
               </p>
               <Link 
-                to="/register" 
+                to={!isLoggedIn ? "/auth" : "/dashboard"}
                 className="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition-colors"
               >
-                Create Your Account
+                {!isLoggedIn ? "Create Your Account" : "Go to Dashboard"}
               </Link>
             </div>
           </RevealOnScroll>

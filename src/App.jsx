@@ -8,10 +8,18 @@ import "./index.css";
 import { Home } from "./components/pages/Home";
 import { NotFound } from "./components/pages/NotFound";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { AuthPage } from "./components/pages/AuthPage";
+import { Universities } from "./components/pages/Universities";
+
+// Boolean to check if the user is logged in localstorage
+
+export const isLoggedIn = localStorage.getItem("isLoggedIn") === "true" ? true : false;
+
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+
 
   useEffect(() => {
     const savedDarkMode = localStorage.getItem("darkMode");
@@ -43,8 +51,10 @@ function App() {
         
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/profile" element={<Page />} />
+          <Route path="/dashboard" element={<Page />} />
+          <Route path="/universities" element={<Universities />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/auth" element={<AuthPage />} />
         </Routes>
 
         <ScrollToTop />

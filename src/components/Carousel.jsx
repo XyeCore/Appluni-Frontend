@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { isLoggedIn } from '../App'; // Import the isLoggedIn variable
 
 export const Carousel = ({ items }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -30,12 +32,12 @@ export const Carousel = ({ items }) => {
                   <h1 className="text-5xl md:text-6xl font-bold mb-4">{item.title}</h1>
                   <p className="text-xl mb-6 max-w-2xl mx-auto">{item.description}</p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a 
-                      href="/register" 
+                    <Link 
+                      to={!isLoggedIn ? "/auth" : "/dashboard"} 
                       className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors"
                     >
                       Get Started
-                    </a>
+                    </Link>
                     <a 
                       href="/universities" 
                       className="bg-white hover:bg-gray-100 text-gray-900 px-8 py-3 rounded-lg font-semibold border border-gray-300 transition-colors"
@@ -51,14 +53,14 @@ export const Carousel = ({ items }) => {
       </div>
       <button
         onClick={goToPrevious}
-        className="absolute top-1/2 left-0 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700"
+        className="absolute top-1/2 left-0 transform -translate-y-1/2  text-white p-2 rounded-full shadow-lg hover:bg-indigo-700 scale-120 "
         aria-label="Previous Slide"
       >
         &#10094;
       </button>
       <button
         onClick={goToNext}
-        className="absolute top-1/2 right-0 transform -translate-y-1/2 bg-indigo-600 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700"
+        className="absolute top-1/2 right-0 transform -translate-y-1/2 text-white p-2 rounded-full shadow-lg hover:bg-indigo-700 scale-120"
         aria-label="Next Slide"
       >
         &#10095;
