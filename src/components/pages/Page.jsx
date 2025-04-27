@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import { Copy } from 'react-feather';
@@ -7,6 +7,20 @@ export const Page = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      const tokenParts = token.split('.');
+      if (tokenParts.length === 3) {
+        const payload = JSON.parse(atob(tokenParts[1]));
+        setUserInfo({ username: payload.sub, fullName: payload.fullName }); // Extracted username and fullName from JWT
+      }
+    }
+    
+  }, []);
 
   const openModal = (content) => {
     setModalContent(content);
@@ -18,16 +32,22 @@ export const Page = () => {
     setIsModalOpen(false);
   };
 
+
+
   return (
     <div className="min-h-screen bg-gray-50">
 
-
+    
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* Welcome Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Welcome back, John!</h1>
-          <p className="text-gray-600">Track and manage your university applications in one place.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Welcome back, {userInfo?.fullName || 'User'}!
+          </h1>
+          <p className="text-gray-600">
+            Track and manage your university applications in one place.
+          </p>
         </div>
 
         {/* Quick Stats */}

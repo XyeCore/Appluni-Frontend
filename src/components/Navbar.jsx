@@ -23,6 +23,12 @@ export const Navbar = () => {
     // Add your language change logic here
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('authToken'); // Remove the token from localStorage
+    localStorage.setItem('isLoggedIn', 'false'); // Update isLoggedIn status
+    window.location.href = '/auth'; // Redirect to the login page
+  };
+
   return (
     <nav className="bg-white shadow-md ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -35,13 +41,6 @@ export const Navbar = () => {
           
           <div className="flex items-center space-x-4">
             
-            {/* Test Link */}
-          <Link 
-                to="/dashboard" 
-                className="px-4 py-2 text-gray-300 hover:text-indigo-800 transition"
-              >
-                (test)
-              </Link>
 
             {/* Language Selector */}
             <div className="relative">
@@ -84,8 +83,11 @@ export const Navbar = () => {
                 Dashboard
               </Link>
                           
-              <Link className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
-              Log Out
+              <Link 
+                onClick={handleLogout} 
+                className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition cursor-pointer"
+              >
+                Log Out
               </Link>
  </>
               

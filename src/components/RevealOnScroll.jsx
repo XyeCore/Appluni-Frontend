@@ -24,3 +24,5 @@ export const RevealOnScroll = ({ children }) => {
     </div>
   );
 };
+
+

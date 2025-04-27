@@ -1,14 +1,18 @@
 import { useState } from 'react';
-import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, ArrowRightIcon, UserIcon } from '@heroicons/react/24/outline';
+import { login, register } from '../../api/auth';
+import { RevealOnScroll } from '../RevealOnScroll';
 
 export const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: '',
-    name: ''
+    name: '',
+    email: ''
   });
+  const [error, setError] = useState(null);
 
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
@@ -22,14 +26,73 @@ export const AuthPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle authentication logic here
-    console.log(formData);
+    setError(null); // Clear previous errors
+    try {
+      if (isLogin) {
+        const response = await login({
+          username: formData.username,
+          password: formData.password,
+        });
+        console.log('Login successful:', response);
+        const token = response.token; // Assuming the backend returns a token
+        localStorage.setItem('authToken', token); // Save token to localStorage
+        const tokenParts = token.split('.');
+        if (tokenParts.length === 3) {
+          const payload = JSON.parse(atob(tokenParts[1]));
+          const isTokenExpired = payload.exp * 1000 < Date.now();
+          if (!isTokenExpired) {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = '/dashboard'; // Redirect to dashboard
+          } else {
+            localStorage.removeItem('authToken');
+            localStorage.setItem('isLoggedIn', 'false');
+          }
+        } else {
+          console.error('Invalid token format');
+          localStorage.setItem('isLoggedIn', 'false');
+        }
+      } else {
+        const response = await register({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+          name: formData.name, // Ensure name is passed as fullName to the backend
+        });
+        console.log('Registration successful:', response);
+        // Automatically log in after registration
+        const loginResponse = await login({
+          username: formData.username,
+          password: formData.password,
+        });
+        const token = loginResponse.token;
+        localStorage.setItem('authToken', token);
+        const tokenParts = token.split('.');
+        if (tokenParts.length === 3) {
+          const payload = JSON.parse(atob(tokenParts[1]));
+          const isTokenExpired = payload.exp * 1000 < Date.now();
+          if (!isTokenExpired) {
+            localStorage.setItem('isLoggedIn', 'true');
+            window.location.href = '/dashboard'; // Redirect to dashboard
+          } else {
+            localStorage.removeItem('authToken');
+            localStorage.setItem('isLoggedIn', 'false');
+          }
+        } else {
+          console.error('Invalid token format');
+          localStorage.setItem('isLoggedIn', 'false');
+        }
+      }
+    } catch (error) {
+      console.error('Error during authentication:', error);
+      setError(error); // Set error to display it
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+      <RevealOnScroll>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {isLogin ? 'Sign in to your account' : 'Create a new account'}
@@ -59,26 +122,56 @@ export const AuthPage = () => {
               </div>
             )}
 
+            {!isLogin && (
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email
+                </label>
+                <div className="mt-1 relative rounded-md shadow-sm">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900"
+                    placeholder="Enter your email"
+                  />
+
+                </div>
+                {/* {formData.email === '' && (
+                    <p className="mt-2 text-sm text-red-600">Email is required.</p>
+                  )} */}
+              </div>
+            )}
+
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email address
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+                Username
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <EnvelopeIcon className="h-5 w-5 text-gray-400" />
+                  <UserIcon className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  type="text"
                   required
-                  value={formData.email}
+                  value={formData.username}
                   onChange={handleInputChange}
                   className="appearance-none block w-full pl-10 px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-gray-900"
-                  placeholder="you@example.com"
+                  placeholder="Enter your username"
                 />
+    
               </div>
+              {/* {formData.username === '' && (
+                  <p className="mt-2 text-sm text-red-600">Username is required.</p>
+                )} */}
             </div>
 
             <div>
@@ -149,6 +242,12 @@ export const AuthPage = () => {
             </div>
           </form>
 
+          {error && (
+  <div className="mt-4 text-sm text-red-600">
+    {typeof error === 'string' ? error : 'An error occurred. Please try again.'}
+  </div>
+)}
+
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
@@ -183,6 +282,7 @@ export const AuthPage = () => {
           </div>
         </div>
       </div>
+      </RevealOnScroll>
     </div>
   );
 };
