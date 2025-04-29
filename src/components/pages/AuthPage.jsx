@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, ArrowRightIcon, UserIcon } from '@heroicons/react/24/outline';
-import { login, register } from '../../api/auth';
+import { login as apiLogin, register } from '../../api/auth';
 import { RevealOnScroll } from '../RevealOnScroll';
 import { useTranslation } from 'react-i18next';
+import { useAuth } from '../../context/AuthContext';
 
 
 
@@ -20,6 +21,14 @@ export const AuthPage = () => {
     email: ''
   });
   const [error, setError] = useState(null);
+  const { login, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard'); // Redirect to dashboard if already logged in
+      window.location.reload(); // Refresh the page after redirecting
+    }
+  }, [isAuthenticated, navigate]);
 
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
@@ -38,31 +47,13 @@ export const AuthPage = () => {
     setError(null); // Clear previous errors
     try {
       if (isLogin) {
-        const response = await login({
+        const response = await apiLogin({
           username: formData.username,
           password: formData.password,
         });
         console.log('Login successful:', response);
-        const token = response.token; // Assuming the backend returns a token
-        localStorage.setItem('authToken', token); // Save token to localStorage
-        const tokenParts = token.split('.');
-        if (tokenParts.length === 3) {
-          const payload = JSON.parse(atob(tokenParts[1]));
-          const isTokenExpired = payload.exp * 1000 < Date.now();
-          if (!isTokenExpired) {
-            localStorage.setItem('isLoggedIn', 'true');
-             navigate('/dashboard');
-             // refresh the page to apply the new token
-            window.location.reload();
-
-          } else {
-            localStorage.removeItem('authToken');
-            localStorage.setItem('isLoggedIn', 'false');
-          }
-        } else {
-          console.error('Invalid token format');
-          localStorage.setItem('isLoggedIn', 'false');
-        }
+        login(response.token); // Update AuthContext state
+        navigate('/dashboard'); // Redirect to dashboard after login
       } else {
         const response = await register({
           username: formData.username,
@@ -72,27 +63,13 @@ export const AuthPage = () => {
         });
         console.log('Registration successful:', response);
         // Automatically log in after registration
-        const loginResponse = await login({
+        const loginResponse = await apiLogin({
           username: formData.username,
           password: formData.password,
         });
-        const token = loginResponse.token;
-        localStorage.setItem('authToken', token);
-        const tokenParts = token.split('.');
-        if (tokenParts.length === 3) {
-          const payload = JSON.parse(atob(tokenParts[1]));
-          const isTokenExpired = payload.exp * 1000 < Date.now();
-          if (!isTokenExpired) {
-            localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = '/dashboard'; // Redirect to dashboard
-          } else {
-            localStorage.removeItem('authToken');
-            localStorage.setItem('isLoggedIn', 'false');
-          }
-        } else {
-          console.error('Invalid token format');
-          localStorage.setItem('isLoggedIn', 'false');
-        }
+        console.log('Auto-login successful:', loginResponse);
+        login(loginResponse.token); // Update AuthContext state
+        navigate('/dashboard'); // Redirect to dashboard after login
       }
     } catch (error) {
       console.error('Error during authentication:', error);
@@ -274,9 +251,9 @@ export const AuthPage = () => {
               <div>
                 <button
                   type="button"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                  className="w-full inline-flex justify-center items-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
                 >
-                  Continue with Google
+                  {t('continueWithGoogle')}
                 </button>
               </div>
             </div>

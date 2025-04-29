@@ -26,8 +26,9 @@ const carouselItems = [
 
 export const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 -z-2">
-      {/* Carousel Section */}
+    
+    <div className="min-h-screen bg-gradient-to-b from-white to-indigo-50 -z-2"> 
+    
       <section className="py-20 px-4 z-2">
         <div className="max-w-7xl mx-auto">
           <Carousel items={carouselItems} />
@@ -63,7 +64,11 @@ export const Home = () => {
       </section>
 
       {/* Universities Section */}
-      <section className="py-20 px-4">
+      <section className="relative py-20 px-4">
+      {/* <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+    <div className="absolute top-0 -right-4 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+    <div className="absolute top-0 right-22% w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+    <div className="absolute -bottom-8 left-20% w-72 h-72 bg-pink-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-4000"></div> */}
         <div className="max-w-7xl mx-auto">
           <RevealOnScroll>
             <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
@@ -127,12 +132,9 @@ export const Home = () => {
           </RevealOnScroll>
         </div>
       </section>
-      {/* <div className="absolute inset-0 w-full h-full pointer-events-none -z-1">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500 rounded-full opacity-50 blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-500 rounded-full opacity-20 blur-3xl"></div>
-        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-yellow-400 rounded-full opacity-20 blur-3xl"></div>
-      </div> // TODO: Fix decorations  */}
-      
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem]">
+  <div className="absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_800px_at_100%_200px,#d5c5ff,transparent)]"></div>
+</div>
     </div>
   );
 };

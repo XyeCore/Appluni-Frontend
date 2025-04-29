@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Modal from '../Modal';
 import { Copy } from 'react-feather';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +10,15 @@ export const Page = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = sessionStorage.getItem('currentPath');
+    if (currentPath !== location.pathname) {
+      sessionStorage.setItem('currentPath', location.pathname);
+      window.location.reload(); // Reload only when navigating to this page
+    }
+  }, [location.pathname]);
 
   useEffect(() => {
     

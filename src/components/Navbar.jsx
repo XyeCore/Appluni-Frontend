@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { GlobeAltIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
-import { isLoggedIn } from '../App'; // Import the isLoggedIn variable
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
+import { useAuth } from '../context/AuthContext';
+
+
 
 export const Navbar = () => {
   const { t } = useTranslation();
@@ -16,6 +18,8 @@ export const Navbar = () => {
     { code: 'ru', name: 'Russian' },
     { code: 'az', name: 'Azerbaijani' },
   ];
+
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     const savedLanguage = localStorage.getItem('selectedLanguage');
@@ -37,8 +41,7 @@ export const Navbar = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken'); // Remove the token from localStorage
-    localStorage.setItem('isLoggedIn', 'false'); // Update isLoggedIn status
+    logout(); // Use the AuthContext logout function
     window.location.href = '/auth'; // Redirect to the login page
   };
 
@@ -87,7 +90,7 @@ export const Navbar = () => {
               )}
             </div>
             
-            {isLoggedIn ? (
+            {isAuthenticated ? (
  <>
               <Link 
                 to="/dashboard" 

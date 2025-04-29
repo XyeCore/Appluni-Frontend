@@ -10,30 +10,25 @@ import { NotFound } from "./components/pages/NotFound";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { AuthPage } from "./components/pages/AuthPage";
 import { Universities } from "./components/pages/Universities";
+import { isTokenExpired } from "./utils/jwtUtils" // Import the token expiration utility
 
 // Boolean to check if the user is logged in localstorage
 
 export const isLoggedIn = localStorage.getItem("isLoggedIn") === "true" ? true : false;
 
-
 function App() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
 
 
-  useEffect(() => {
-    const savedDarkMode = localStorage.getItem("darkMode");
-    if (!savedDarkMode) {
-      setDarkMode(false);
-      localStorage.setItem("darkMode", "false");
-    }
-    setDarkMode(savedDarkMode === "true");
-  }, []);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-    localStorage.setItem("darkMode", (!darkMode).toString());
-  };
+  // useEffect(() => {
+  //   const token = localStorage.getItem('access_token');
+  // if (!token || isTokenExpired(token)) {
+  //   localStorage.removeItem('access_token');
+    
+  //   window.location.href = '/auth';
+  //   alert('Сессия истекла. Пожалуйста, войдите снова.');
+  // }
+  // }, []);
 
   return (
     <Router>
@@ -44,8 +39,7 @@ function App() {
         <Navbar 
           menuOpen={menuOpen} 
           setMenuOpen={setMenuOpen} 
-          darkMode={darkMode}
-          toggleDarkMode={toggleDarkMode}
+
         />
         <MobileMenu menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
         

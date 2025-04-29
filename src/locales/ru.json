@@ -4,10 +4,12 @@
   "logout": "Выйти",
         "login": "Войти",
        "dashboard": "Панель управления",
+       "auth": "Регистрация",
   "getStarted": "Начать",
   "exploreUniversities": "Исследовать университеты",
   "needAccount": "Нужна учетная запись? Зарегистрируйтесь",
   "alreadyHaveAccount": "Уже есть учетная запись? Войдите",
   "trackApplications": "Отслеживайте и управляйте своими заявками в одном месте.",
-  "explorePrograms": "Изучите университеты и их программы ниже."
+  "explorePrograms": "Изучите университеты и их программы ниже.",
+  "continueWithGoogle": "Продолжить с Google"
 }
