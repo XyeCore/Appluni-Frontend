@@ -11,13 +11,13 @@ const carouselItems = [
     description: 'Streamline your university application process with our comprehensive platform. Get expert guidance, track your applications, and increase your chances of admission.'
   },
   { 
-    image: 'https://via.placeholder.com/1200x400?text=Slide+2', 
+    image: 'https://fel.cvut.cz/dokumenty/1167/image-thumb__1167__BoxCtaImage/2022_06_fel_dejvice_kampus_exterier_noc_bezlidi_03.jpg', 
     alt: 'Slide 2',
     title: 'Explore Top Universities',
     description: 'Discover a wide range of programs and institutions across Europe. Find the perfect fit for your academic and career goals.'
   },
   { 
-    image: 'https://via.placeholder.com/1200x400?text=Slide+3', 
+    image: 'https://www.ls.tum.de/fileadmin/w00bww/ls/bilder/research/hef-mit-bruecke-slider.jpg', 
     alt: 'Slide 3',
     title: 'Join a Global Community',
     description: 'Connect with students and alumni from around the world. Build a network that supports your growth and success.'
@@ -26,9 +26,9 @@ const carouselItems = [
 
 export const Home = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 -z-2">
       {/* Carousel Section */}
-      <section className="py-20 px-4">
+      <section className="py-20 px-4 z-2">
         <div className="max-w-7xl mx-auto">
           <Carousel items={carouselItems} />
         </div>
@@ -127,6 +127,12 @@ export const Home = () => {
           </RevealOnScroll>
         </div>
       </section>
+      {/* <div className="absolute inset-0 w-full h-full pointer-events-none -z-1">
+        <div className="absolute top-0 left-0 w-96 h-96 bg-indigo-500 rounded-full opacity-50 blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-pink-500 rounded-full opacity-20 blur-3xl"></div>
+        <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-yellow-400 rounded-full opacity-20 blur-3xl"></div>
+      </div> // TODO: Fix decorations  */}
+      
     </div>
   );
 };

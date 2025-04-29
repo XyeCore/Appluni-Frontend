@@ -2,6 +2,7 @@ import React from 'react';
 import UniversityCard from '../UniversityCard';
 import Modal from '../Modal';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 
 export const Universities = () => {
@@ -12,6 +13,7 @@ export const Universities = () => {
   ];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const { t } = useTranslation();
 
   const openModal = (content) => {
     setModalContent(content);
@@ -28,8 +30,12 @@ export const Universities = () => {
     <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Available Universities</h1>
-          <p className="text-gray-600">Explore the universities and their programs below.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            {t('universities')}
+          </h1>
+          <p className="text-gray-600">
+            {t('explorePrograms')}
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

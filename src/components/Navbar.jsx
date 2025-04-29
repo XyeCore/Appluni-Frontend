@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { GlobeAltIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { isLoggedIn } from '../App'; // Import the isLoggedIn variable
+import { useTranslation } from 'react-i18next';
+import i18n from 'i18next';
 
 export const Navbar = () => {
+  const { t } = useTranslation();
+
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('en');
 
@@ -13,6 +17,14 @@ export const Navbar = () => {
     { code: 'az', name: 'Azerbaijani' },
   ];
 
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    if (savedLanguage) {
+      setSelectedLanguage(savedLanguage);
+      // Add logic to load translations for the saved language
+    }
+  }, []);
+
   const toggleLanguageDropdown = () => {
     setIsLanguageOpen(!isLanguageOpen);
   };
@@ -20,7 +32,8 @@ export const Navbar = () => {
   const selectLanguage = (code) => {
     setSelectedLanguage(code);
     setIsLanguageOpen(false);
-    // Add your language change logic here
+    localStorage.setItem('selectedLanguage', code);
+    i18n.changeLanguage(code); // Dynamically update the language in i18next
   };
 
   const handleLogout = () => {
@@ -35,7 +48,7 @@ export const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="text-xl font-bold text-indigo-600">
-               Appluni
+              Appluni
             </Link>
           </div>
           
@@ -50,7 +63,7 @@ export const Navbar = () => {
               >
                 <GlobeAltIcon className="h-5 w-5" />
                 <span className="hidden sm:inline">
-                  {languages.find(lang => lang.code === selectedLanguage)?.name}
+                  {t(selectedLanguage)}
                 </span>
                 <ChevronDownIcon className="h-4 w-4 ml-1" />
               </button>
@@ -67,7 +80,7 @@ export const Navbar = () => {
                           : 'text-gray-700 hover:bg-gray-100'
                       }`}
                     >
-                      {language.name}
+                      {t(language.name)}
                     </button>
                   ))}
                 </div>
@@ -80,14 +93,14 @@ export const Navbar = () => {
                 to="/dashboard" 
                 className="px-4 py-2 text-indigo-600 hover:text-indigo-800 transition"
               >
-                Dashboard
+                {t('dashboard')}
               </Link>
                           
               <Link 
                 onClick={handleLogout} 
                 className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition cursor-pointer"
               >
-                Log Out
+                {t('logout')}
               </Link>
  </>
               
@@ -96,7 +109,7 @@ export const Navbar = () => {
                 to="/auth" 
                 className="px-4 py-2 text-indigo-600 hover:text-indigo-800 transition"
               >
-                Log In
+                {t('login')}
               </Link>
             )}
 

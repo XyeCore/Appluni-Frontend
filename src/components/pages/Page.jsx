@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import { Copy } from 'react-feather';
+import { useTranslation } from 'react-i18next';
 
 export const Page = () => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
@@ -43,10 +45,10 @@ export const Page = () => {
         {/* Welcome Section */}
         <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            Welcome back, {userInfo?.fullName || 'User'}!
+            {t('welcome')}, {userInfo?.fullName || t('user')}!
           </h1>
           <p className="text-gray-600">
-            Track and manage your university applications in one place.
+            {t('trackApplications')}
           </p>
         </div>
 

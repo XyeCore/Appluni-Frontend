@@ -1,9 +1,16 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, ArrowRightIcon, UserIcon } from '@heroicons/react/24/outline';
 import { login, register } from '../../api/auth';
 import { RevealOnScroll } from '../RevealOnScroll';
+import { useTranslation } from 'react-i18next';
+
+
 
 export const AuthPage = () => {
+
+  const { t } = useTranslation();
+  const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -44,7 +51,10 @@ export const AuthPage = () => {
           const isTokenExpired = payload.exp * 1000 < Date.now();
           if (!isTokenExpired) {
             localStorage.setItem('isLoggedIn', 'true');
-            window.location.href = '/dashboard'; // Redirect to dashboard
+             navigate('/dashboard');
+             // refresh the page to apply the new token
+            window.location.reload();
+
           } else {
             localStorage.removeItem('authToken');
             localStorage.setItem('isLoggedIn', 'false');
@@ -95,7 +105,7 @@ export const AuthPage = () => {
       <RevealOnScroll>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          {isLogin ? 'Sign in to your account' : 'Create a new account'}
+          {isLogin ? t('login') : t('auth')}
         </h2>
       </div>
 
@@ -277,7 +287,7 @@ export const AuthPage = () => {
               onClick={toggleAuthMode}
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
-              {isLogin ? 'Need an account? Sign up' : 'Already have an account? Sign in'}
+              {isLogin ? t('needAccount') : t('alreadyHaveAccount')}
             </button>
           </div>
         </div>
