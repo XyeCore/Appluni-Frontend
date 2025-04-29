@@ -11,6 +11,7 @@ import { ScrollToTop } from "./components/ScrollToTop";
 import { AuthPage } from "./components/pages/AuthPage";
 import { Universities } from "./components/pages/Universities";
 import { isTokenExpired } from "./utils/jwtUtils" // Import the token expiration utility
+import Footer from "./components/Footer";
 
 // Boolean to check if the user is logged in localstorage
 
@@ -51,6 +52,7 @@ function App() {
           <Route path="/auth" element={<AuthPage />} />
         </Routes>
 
+        <Footer />
         <ScrollToTop />
       </div>
     </Router>

@@ -2,30 +2,36 @@ import { Link } from 'react-router-dom';
 import { RevealOnScroll } from '../RevealOnScroll';
 import { Carousel } from '../Carousel';
 import { isLoggedIn } from '../../App';
+import { useTranslation } from 'react-i18next';
 
-const carouselItems = [
-  { 
-    image: 'https://braincity.berlin/fileadmin/user_upload/tuberlin-bibliothek--tu-berlin-dahl-1000.jpg', 
-    alt: 'Slide 1',
-    title: 'Your Gateway to European Universities',
-    description: 'Streamline your university application process with our comprehensive platform. Get expert guidance, track your applications, and increase your chances of admission.'
-  },
-  { 
-    image: 'https://fel.cvut.cz/dokumenty/1167/image-thumb__1167__BoxCtaImage/2022_06_fel_dejvice_kampus_exterier_noc_bezlidi_03.jpg', 
-    alt: 'Slide 2',
-    title: 'Explore Top Universities',
-    description: 'Discover a wide range of programs and institutions across Europe. Find the perfect fit for your academic and career goals.'
-  },
-  { 
-    image: 'https://www.ls.tum.de/fileadmin/w00bww/ls/bilder/research/hef-mit-bruecke-slider.jpg', 
-    alt: 'Slide 3',
-    title: 'Join a Global Community',
-    description: 'Connect with students and alumni from around the world. Build a network that supports your growth and success.'
-  },
-];
+
 
 export const Home = () => {
+  const { t } = useTranslation();
+
+  const carouselItems = [
+    { 
+      image: 'https://braincity.berlin/fileadmin/user_upload/tuberlin-bibliothek--tu-berlin-dahl-1000.jpg', 
+      alt: 'Slide 1',
+      title: t('carousel.title1'),
+      description: t('carousel.description1')
+    },
+    { 
+      image: 'https://fel.cvut.cz/dokumenty/1167/image-thumb__1167__BoxCtaImage/2022_06_fel_dejvice_kampus_exterier_noc_bezlidi_03.jpg', 
+      alt: 'Slide 2',
+      title: t('carousel.title2'),
+      description: t('carousel.description2')
+    },
+    { 
+      image: 'https://www.ls.tum.de/fileadmin/w00bww/ls/bilder/research/hef-mit-bruecke-slider.jpg', 
+      alt: 'Slide 3',
+      title: t('carousel.title3'),
+      description: t('carousel.description3')
+    }
+  ];
+
   return (
+
     
     <div className="min-h-screen bg-gradient-to-b from-white to-indigo-50 -z-2"> 
     

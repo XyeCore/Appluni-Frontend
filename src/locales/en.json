@@ -1,16 +1,38 @@
 {
-  "welcome": "Welcome",
-  "logout": "Log Out",
-  "login": "Log In",
-  "auth": "Sign up",
-  "dashboard": "Dashboard",
-  "getStarted": "Get Started",
-  "exploreUniversities": "Explore Universities",
-  "needAccount": "Need an account? Sign up",
-  "alreadyHaveAccount": "Already have an account? Sign in",
-  "trackApplications": "Track and manage your university applications in one place.",
-  "explorePrograms": "Explore the universities and their programs below.",
-  "continueWithGoogle": "Continue with Google"
+    "welcome": "Welcome",
+    "logout": "Log Out",
+    "login": "Log In",
+    "auth": "Sign up",
+    "dashboard": "Dashboard",
+    "getStarted": "Get Started",
+    "exploreUniversities": "Explore Universities",
+    "needAccount": "Need an account? Sign up",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "trackApplications": "Track and manage your university applications in one place.",
+    "explorePrograms": "Explore the universities and their programs below.",
+    "continueWithGoogle": "Continue with Google",
+    "allRightsReserved": "All rights reserved",
+    "privacyPolicy": "Privacy Policy",
+    "quickLinks": "Quick Links",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "home": "Home",
+    "universities": "Universities",
+    "programs": "Programs", 
+    "carousel": {
+        "title1": "Explore Universities",
+        "title2": "Explore Top Universities",
+        "title3": "Join a Global Community",
+        "description1": "Discover a wide range of universities and programs across Europe. Find the perfect fit for your academic and career goals.",
+        "description2": "Discover a wide range of programs and institutions across Europe. Find the perfect fit for your academic and career goals.",
+        "description3": "Connect with students and professionals from around the world. Share experiences, insights, and opportunities."
+    },
+
+    "exploreTopUniversities": "",
+    "exploreTopUniversitiesDscr":"Discover a wide range of programs and institutions across Europe. Find the perfect fit for your academic and career goals.",
+    "joinGlobalCommunity": "Join a global community",
+    "joinGlobalCommunityDscr":"Connect with students and professionals from around the world. Share experiences, insights, and opportunities."
+
 }
 
 
