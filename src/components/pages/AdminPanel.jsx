@@ -28,8 +28,12 @@ const AdminPanel = () => {
                 <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Enter university name" />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Location</label>
-                <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Enter location" />
+                <label className="block text-sm font-medium text-gray-700">Country</label>
+                <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Enter Country" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">City</label>
+                <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Enter City" />
               </div>
               <button type="submit" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">Create University</button>
             </form>
@@ -49,13 +53,25 @@ const AdminPanel = () => {
                   <option>University B</option>
                 </select>
               </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Degree</label>
+                <select className="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                  <option>Select degree level</option>
+                  <option>Bachellor</option>
+                  <option>Master</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Language</label>
+                <input type="text" className="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Enter program name" />
+              </div>
               <button type="submit" className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">Create Program</button>
             </form>
           </div>
         </div>
       ) },
     { label: 'Site Settings', content: 'Test content for site settings.' },
-    { label: 'View Logs', content: 'Test content for viewing logs.' },
+    { label: 'View Logs', content: 'Logs are not available right now.' },
   ];
 
   return (
