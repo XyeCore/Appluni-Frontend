@@ -12,6 +12,8 @@ import { AuthPage } from "./components/pages/AuthPage";
 import { Universities } from "./components/pages/Universities";
 import { isTokenExpired } from "./utils/jwtUtils" // Import the token expiration utility
 import Footer from "./components/Footer";
+import NewApplication from "./components/pages/NewApplication";
+import AdminPanel from "./components/pages/AdminPanel";
 
 // Boolean to check if the user is logged in localstorage
 
@@ -50,6 +52,8 @@ function App() {
           <Route path="/universities" element={<Universities />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/auth" element={<AuthPage />} />
+          <Route path="/new-application" element={<NewApplication />} />
+          <Route path="/admin-panel" element={<AdminPanel />} />
         </Routes>
 
         <Footer />

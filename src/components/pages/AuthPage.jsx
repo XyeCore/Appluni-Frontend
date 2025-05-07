@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, LockClosedIcon, EyeIcon, EyeSlashIcon, ArrowRightIcon, UserIcon } from '@heroicons/react/24/outline';
-import { login as apiLogin, register } from '../../api/auth';
+import { login as apiLogin, register } from '../../api/api';
 import { RevealOnScroll } from '../RevealOnScroll';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
@@ -26,7 +26,6 @@ export const AuthPage = () => {
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/dashboard'); // Redirect to dashboard if already logged in
-      window.location.reload(); // Refresh the page after redirecting
     }
   }, [isAuthenticated, navigate]);
 
