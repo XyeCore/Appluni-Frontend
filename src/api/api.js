@@ -25,7 +25,7 @@ axios.interceptors.request.use(
 export const login = async (credentials) => {
 
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth/sign-in`, {
+    const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-in`, {
       username: credentials.username,
       password: credentials.password,
     });
@@ -37,7 +37,7 @@ export const login = async (credentials) => {
 
 export const register = async (userData) => {
   try {
-    const response = await axios.post(`${API_BASE_URL}/auth/sign-up`, {
+    const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-up`, {
       username: userData.username,
       email: userData.email,
       password: userData.password,
