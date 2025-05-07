@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isTokenExpired } from '../utils/jwtUtils';
 
-const API_BASE_URL = 'http://backend-service:8080'; // Updated to match backend URL
+const API_BASE_URL = 'http://appluni.work.gd'; // Updated to match backend URL
 
 // Add Axios interceptor to include JWT token in all requests
 axios.interceptors.request.use(
