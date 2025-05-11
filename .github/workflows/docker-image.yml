@@ -17,6 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag fntm04ka/appluni-backend:latest
+      run: docker build . --file Dockerfile --tag fntm04ka/appluni-frontend:latest
     - name: push image to Dockerhub
-      run: docker push fntm04ka/appluni-backend:latest
+      run:
+        docker login -u fntm04ka -p ${{secrets.DOCKER_HUB_TOKEN}}
+        docker push fntm04ka/appluni-frontend:latest
