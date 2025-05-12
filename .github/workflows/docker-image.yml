@@ -19,9 +19,10 @@ jobs:
     
     - name: Build the Docker image
       run: docker build . \
-        --file Dockerfile --tag fntm04ka/appluni-frontend:latest \
-        --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} 
-
+        --file Dockerfile  \
+        --build-arg VITE_API_URL=${{ secrets.VITE_API_URL }} \
+        --tag fntm04ka/appluni-frontend:latest
+        
     - name: login to Dockerhub
       run:
         docker login -u fntm04ka -p ${{ secrets.DOCKER_HUB_TOKEN }}

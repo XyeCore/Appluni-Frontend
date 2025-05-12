@@ -28,3 +28,6 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
+
+# Print the VITE_API_URL to verify it's set correctly
+RUN echo "VITE_API_URL is set to: $VITE_API_URL"
