@@ -3,6 +3,10 @@ FROM node:20 AS builder
 
 WORKDIR /app
 
+# Accept build argument for API URL
+ARG VITE_API_URL
+ENV VITE_API_URL=$VITE_API_URL
+
 COPY package*.json ./
 RUN npm install
 COPY . .
@@ -13,9 +17,6 @@ RUN npm run build
 # ===== STAGE 2: run with Nginx =====
 FROM nginx:stable-alpine
 
-# Accept build argument for API URL
-ARG VITE_API_URL
-ENV VITE_API_URL=$VITE_API_URL
 
 # Remove default config
 RUN rm /etc/nginx/conf.d/default.conf
