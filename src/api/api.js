@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isTokenExpired } from '../utils/jwtUtils';
 
-const API_BASE_URL = 'http://appluni.work.gd'; // Updated to match backend URL
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000'; // Default to backend URL if not set in env
 
 // Add Axios interceptor to include JWT token in all requests
 axios.interceptors.request.use(
