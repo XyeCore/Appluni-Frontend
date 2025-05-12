@@ -1,8 +1,7 @@
 {
-  "name": "beautiful-portfolio",
-  "homepage": "https://machadop1407.github.io/pedrotech-portfolio",
-  "private": true,
-  "version": "0.0.0",
+  "name": "appluni",
+  "homepage": "https://appluni.work.gd",
+  "version": "0.0.1a",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -16,7 +15,6 @@
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/vite": "^4.0.0",
     "axios": "^1.9.0",
-    "emailjs-com": "^3.2.0",
     "i18next": "^25.0.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
