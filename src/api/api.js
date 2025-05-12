@@ -3,6 +3,8 @@ import { isTokenExpired } from '../utils/jwtUtils';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'; // Default to backend URL if not set in env
 
+
+console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
 // Add Axios interceptor to include JWT token in all requests
 axios.interceptors.request.use(
   (config) => {
