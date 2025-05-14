@@ -1,14 +1,15 @@
 import axios from 'axios';
 import { isTokenExpired } from '../utils/jwtUtils';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'; // Default to backend URL if not set in env
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080'; // Default to backend URL if not set in env
 
 
-console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
+// console.log("API_BASE_URL:", API_BASE_URL); // Debugging log
+
 // Add Axios interceptor to include JWT token in all requests
 axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken'); // Changed from 'authToken' to 'accessToken'
+    const token = localStorage.getItem('accessToken'); 
     if (token) {
       if (isTokenExpired(token)) {
         console.warn('Token is expired. Removing from localStorage.');
@@ -59,7 +60,7 @@ export const register = async (userData) => {
  * @param {Array<string>} sort - Sorting criteria.
  * @returns {Promise<Object>} - The API response containing applications data.
  */
-export const fetchApplications = async (userId, page = 0, size = 10, sort = 'string') => {
+export const fetchApplications = async (userId) => { //, page = 0, size = 10, sort = 'string') => {
   try {
     console.log("Fetching applications with params:", { userId }); // Debugging log
     const response = await axios.get(`${API_BASE_URL}/api/v1/applications`, {

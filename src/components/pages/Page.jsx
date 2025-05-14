@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Modal from '../Modal';
 import { Copy } from 'react-feather';
 import { useTranslation } from 'react-i18next';
@@ -8,23 +8,14 @@ import { extractUserIdFromToken } from '../../utils/jwtUtils';
 
 export const Page = () => {
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState('dashboard');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [userInfo, setUserInfo] = useState(null);
   const [applications, setApplications] = useState([]); // Initialize as an empty array
   const [isLoading, setIsLoading] = useState(true); // Add loading state
   const [error, setError] = useState(null); // Add error state
-  const location = useLocation();
+  const [deletingApplicationId, setDeletingApplicationId] = useState(null); // Track the application being deleted
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const currentPath = sessionStorage.getItem('currentPath');
-    if (currentPath !== location.pathname) {
-      sessionStorage.setItem('currentPath', location.pathname);
-      window.location.reload(); // Reload only when navigating to this page
-    }
-  }, [location.pathname]);
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -75,14 +66,28 @@ export const Page = () => {
 
   const handleDeleteApplication = async () => {
     if (modalContent) {
-      try {
-        await deleteApplication(modalContent.id); // Await the delete function to ensure it completes
-        closeModal(); // Close the modal after successful operation
-        window.location.reload(); // Reload the page to fetch updated applications
-      } catch (error) {
-        console.error('Error marking application as deleted:', error);
-        alert('An error occurred while marking the application as deleted. Please try again.');
-      }
+      closeModal(); // Close the modal immediately
+
+      // Delay the confirmation dialog slightly to ensure the modal is fully closed
+      setTimeout(async () => {
+        try {
+          // Are you sure you want to delete this application?
+          const confirmDelete = window.confirm(`Are you sure you want to delete the application with ID: ${modalContent.id}?`);
+          if (!confirmDelete) {
+            return; // User canceled the deletion
+          }
+          setDeletingApplicationId(modalContent.id); // Set the deleting application ID
+          setTimeout(async () => {
+            await deleteApplication(modalContent.id); // Await the delete function to ensure it completes
+            setApplications((prevApps) => prevApps.filter((app) => app.id !== modalContent.id)); // Remove the application from the list
+            setDeletingApplicationId(null); // Clear the deleting application ID
+          }, 500); // Delay to allow animation to complete
+        } catch (error) {
+          console.error('Error marking application as deleted:', error);
+          alert('An error occurred while marking the application as deleted. Please try again.');
+          setDeletingApplicationId(null); // Clear the deleting application ID in case of error
+        }
+      }, 10); // Delay to ensure modal is fully closed before showing the confirmation dialog
     }
   };
 
@@ -134,9 +139,13 @@ export const Page = () => {
             <h2 className="text-lg font-medium text-gray-900">Your Applications</h2>
           </div>
           
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 ">
             {applications.map((application) => (
-              <div key={application.id} className="p-6 hover:bg-gray-50 transition">
+              <div
+                key={application.id}
+                className={`p-6 hover:bg-gray-50 transition-all duration-300 ease-in-out ${deletingApplicationId === application.id ? 'transform -translate-x-full opacity-0 pointer-events-none' : ''}`}
+                
+              >
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-lg font-medium text-gray-900">Application ID: {application.id}</h3>
@@ -164,14 +173,12 @@ export const Page = () => {
                   </div>
                 </div>
               </div>
-
-              
             ))}
              <div className="p-6 hover:bg-gray-50 transition">
               <div className="flex items-center justify-between">
                 <div>
                   <h3 className="text-lg font-medium text-gray-900">State University</h3>
-                  <p className="text-sm text-gray-500">Business Administration - Bachelor's Program</p>
+                  <p className="text-sm text-gray-500">Business Administration - Bachelor{'\''}s Program</p>
                 </div>
                 <div className="flex items-center space-x-4">
                   <span className="px-3 py-1 text-sm font-medium text-blue-800 bg-blue-100 rounded-full">
