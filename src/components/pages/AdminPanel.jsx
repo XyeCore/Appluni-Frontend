@@ -57,7 +57,7 @@ const AdminPanel = () => {
                 <label className="block text-sm font-medium text-gray-700">Degree</label>
                 <select className="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
                   <option>Select degree level</option>
-                  <option>Bachellor</option>
+                  <option>Bachelor</option>
                   <option>Master</option>
                 </select>
               </div>
