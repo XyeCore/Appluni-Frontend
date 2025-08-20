@@ -1,16 +1,16 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { isTokenExpired } from '../utils/jwtUtils';
+import { useAuth } from '../context/AuthContext';
 
 const ProtectedRoute = ({ children }) => {
-  const token = localStorage.getItem('access_token');
+  const { isAuthenticated } = useAuth();
 
-  if (!token || isTokenExpired(token)) {
-    alert('Сессия истекла. Пожалуйста, войдите снова.');
-    localStorage.removeItem('access_token');
-    return <Navigate to="/login" replace />;
+  // Если не авторизован — редиректим на /login
+  if (!isAuthenticated) {
+    return <Navigate to="/auth" replace />;
   }
 
+  // Если авторизован — показываем защищённый контент
   return children;
 };
 
