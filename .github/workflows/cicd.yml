@@ -19,5 +19,4 @@ jobs:
       context:          .
       dockerfile:       ./Dockerfile
       container_name:   ""
-    secrets: inherit          # <— передаём ВСЕ секреты вызывающего job в общий workflow
-    environment: prod         # <— чтобы подхватились environment-секреты (KUBECONFIG_BASE64)
+    secrets: inherit          # <— передаём ВСЕ секреты вызывающего job в общий workflow 
