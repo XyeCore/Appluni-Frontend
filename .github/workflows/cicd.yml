@@ -18,6 +18,8 @@ jobs:
       k8s_deployment:  frontend
       context:         .
       dockerfile:      ./Dockerfile
-      build_args: |    # <— build-arg для фронта
-        VITE_API_URL=${{ secrets.VITE_API_URL }}
-    secrets: inherit
+    secrets:
+      DOCKERHUB_USERNAME:  ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_TOKEN:     ${{ secrets.DOCKERHUB_TOKEN }}
+      KUBECONFIG_BASE64:   ${{ secrets.KUBECONFIG_BASE64 }}
+      VITE_API_URL:        ${{ secrets.VITE_API_URL }}
