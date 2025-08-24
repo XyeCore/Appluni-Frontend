@@ -2,7 +2,7 @@ import axios from 'axios';
 import { isTokenExpired } from '../utils/jwtUtils';
 
 // Support both possible env names and provide a same fallback 
-const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:80';
 
 // Add Axios interceptor to include JWT token in all requests
 axios.interceptors.request.use(
@@ -25,6 +25,8 @@ axios.interceptors.request.use(
 
 export const login = async (credentials) => {
   try {
+    console.log("API_BASE_URL:", API_BASE_URL);
+    
     const response = await axios.post(`${API_BASE_URL}/api/v1/auth/sign-in`, {
       username: credentials.username,
       password: credentials.password,
