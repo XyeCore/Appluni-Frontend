@@ -3,7 +3,7 @@ import { isTokenExpired } from '../utils/jwtUtils';
 
 // Получаем значение переменной окружения
 const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
-const API_BASE_URL = (!envUrl || envUrl === 'empty' || envUrl === 'none') ? '' : envUrl;
+const API_BASE_URL = (envUrl && envUrl.includes('none')) ? '' : envUrl;
 
 console.log('API_BASE_URL:', API_BASE_URL);
 
