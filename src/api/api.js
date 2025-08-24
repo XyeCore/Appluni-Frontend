@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { isTokenExpired } from '../utils/jwtUtils';
 
-// Support both possible env names and provide a sane fallback
+// Support both possible env names and provide a same fallback 
 const API_BASE_URL = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
 // Add Axios interceptor to include JWT token in all requests
