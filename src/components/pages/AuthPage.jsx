@@ -72,7 +72,7 @@ export const AuthPage = () => {
       }
     } catch (error) {
       console.error('Error during authentication:', error);
-      setError(error); // Set error to display it
+      setError(error["detail"]); // Set error to display it
     }
   };
 
